@@ -1,4 +1,4 @@
-package com.demo.Cursos.models;
+package com.demo.Cursos.models.Enumarated;
 
 public enum ETipoCurso {
     EBook,

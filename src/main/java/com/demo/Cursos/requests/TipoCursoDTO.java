@@ -1,6 +1,6 @@
 package com.demo.Cursos.requests;
 
-import com.demo.Cursos.models.ETipoCurso;
+import com.demo.Cursos.models.Enumarated.ETipoCurso;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

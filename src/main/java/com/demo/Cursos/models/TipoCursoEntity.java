@@ -16,6 +16,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.Set;
 
+import com.demo.Cursos.models.Enumarated.ETipoCurso;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
