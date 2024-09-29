@@ -1,5 +1,6 @@
 package com.demo.Cursos.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,7 +36,7 @@ public class UserEntity {
 
     private String contraseña;
 
-    // Relación de muchos a muchos 
+    // Relación de muchos a muchos (Relación de usuario a roles)
     @ManyToMany
     @JoinTable(
         name = "usuario_roles",
@@ -43,4 +45,9 @@ public class UserEntity {
     )
     @Builder.Default
     private Set<RolEntity> roles = new HashSet<>();
+
+    // Relación de uno a muchos para certificados 
+    @OneToMany(mappedBy = "usuario", cascade=CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private Set<CertificadoEntity> certificados = new HashSet<>();
 }

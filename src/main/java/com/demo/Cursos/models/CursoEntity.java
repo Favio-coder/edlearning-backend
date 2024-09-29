@@ -1,8 +1,9 @@
 package com.demo.Cursos.models;
 
-import java.sql.Timestamp;  // Cambiar a java.sql.Timestamp
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
+import java.util.HashSet;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -16,8 +17,8 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.FetchType;  // Asegúrate de importar FetchType
-import jakarta.persistence.CascadeType;  // Asegúrate de importar CascadeType
+import jakarta.persistence.FetchType;
+import jakarta.persistence.CascadeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -46,13 +47,20 @@ public class CursoEntity {
     @Lob
     private byte[] imagenReferencial;
 
+    // Relación uno a muchos con Modulos
     @OneToMany(mappedBy = "curso")
     @JsonManagedReference
     private List<ModuloEntity> modulos;
 
+    // Relación muchos a muchos con Tipo de Curso
     @ManyToMany(fetch = FetchType.EAGER, targetEntity = TipoCursoEntity.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE}) 
     @JoinTable(name = "cursoTipoCurso",
                joinColumns = @JoinColumn(name = "cursoId"),
                inverseJoinColumns = @JoinColumn(name = "tipoCursoId"))
-    private Set<TipoCursoEntity> tipoCurso;   
+    private Set<TipoCursoEntity> tipoCurso;
+    
+    // Relación de uno a muchos para certificados
+    @OneToMany(mappedBy = "curso", cascade=CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private Set<CertificadoEntity> certificados = new HashSet<>();
 }
